@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H501</title>
+</head>
+
+<body>
+    <form action="">
+        <fieldset>
+            <legend>form type</legend>
+            <p>
+                <label for="">
+                    email: <input type="email" name="email" required>
+                </label>
+            </p>
+            <p>
+                <label for="">
+                    color: <input type="color" name="color">
+                </label>
+            </p>
+            <p>
+                <label for="">
+                    url: <input type="url" name='url'>
+                </label>
+            </p>
+            <p>
+                <label for="">
+                    number: <input type="number" step="3" name="number">
+                </label>
+            </p>
+            <p>
+                <label for="">
+                    range: <input type="range" name="range" value="100">
+                </label>
+            </p>
+            <p>
+                <label for="">
+                    search: <input type="search" name="search">
+                </label>
+            </p>
+            <p>
+                <label for="">
+                    tel: <input type="tel" name="tel">
+                </label>
+            </p>
+            <p>
+                <label for="">
+                    time: <input type="time" name="time">
+                </label>
+            </p>
+            <p>
+
+                <label for="">
+                    date: <input type="date" name="date">
+                </label>
+            </p>
+            <p>
+
+                <label for="">
+                    datetime: <input type="datetime">
+                </label>
+            </p>
+            <p>
+
+                <label for="">
+                    week: <input type="week" name="month">
+                </label>
+            </p>
+            <p>
+
+                <label for="">
+                    month: <input type="month" name="month">
+                </label>
+            </p>
+            <p>
+                <label for="">
+                    datetime-local: <input type="datetime-local" name="datetime-local">
+                </label>
+            </p>
+            <p>
+                <label for="">
+                    data list : 
+                    <input type="text" list="myData">
+                    <datalist id="myData">
+                        <option >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                    </datalist>
+                </label>
+            </p>
+            <p>
+                <input type="submit">
+            </p>
+        </fieldset>
+    </form>
+<!-- H5 里面可以自定义元素属性 必须以 data-开头-->
+
+<div class="box" title="盒子" data-my-name="system" data-content="am a div">
+    div
+</div>
+
+<script>
+    let box = document.querySelector('.box');
+    console.log(box.dataset["content"]);
+    console.log(box.dataset["myName"]);
+    
+</script>
+</body>
+
+</html>
