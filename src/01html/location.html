@@ -17,22 +17,27 @@
         }
 
         #container {
-            height: 100%
+            height: 80%
         }
     </style>
-    <script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=LwDcHzcF6Sumqkys42XfCN3WmXn6GVhS">
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=LwDcHzcF6Sumqkys42XfCN3WmXn6GVhS">
     </script>
 </head>
 
 <body>
     <div id="container"></div>
     <script type="text/javascript">
-        var map = new BMapGL.Map("container");
-        // 创建地图实例 
-        var point = new BMapGL.Point(117.02496707, 36.68278473);
-        // 创建点坐标 
-        map.centerAndZoom(point, 15);
-// 初始化地图，设置中心点坐标和地图级别
+        // 创建地图实例
+        var map = new BMap.Map('container');
+        // 创建点坐标
+        var point = new BMap.Point(117.151077, 36.666859);
+        // 初始化地图， 设置中心点坐标和地图级别
+        map.centerAndZoom(point, 11);
+        // 开启滚轮缩放
+        map.enableScrollWheelZoom(true);
+        // 添加覆盖物
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
     </script>
 </body>
 

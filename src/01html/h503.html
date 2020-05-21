@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage</title>
+</head>
+
+<body>
+    <input type="text" />
+    <button id="save">sessionStorage存储</button>
+    <button id="get">sessionStorage获取</button>
+    <button id="update">sessionStorage更新</button>
+    <button id="delete">sessionStorage删除</button>
+    <button id="clear">sessionStorage清除</button>
+
+    <script>
+        let inputTest = document.querySelector('input');
+        
+        let save = document.querySelector('#save');
+        let get = document.querySelector('#get');
+        let update = document.querySelector('#update');
+        let deleteButton = document.querySelector('#delete');
+        let clear = document.querySelector('#clear');
+
+        save.onclick = function () {
+            window.sessionStorage.setItem('userName', inputTest.value);
+            window.sessionStorage.setItem('pwd', '123456');
+            window.sessionStorage.setItem('age', 18);
+        }
+
+        get.onclick = function () {
+            console.log(inputTest.value);
+        }
+
+        update.onclick = function() {
+            window.sessionStorage.setItem('userName', inputTest.value);
+        }
+
+        deleteButton.onclick = function () {
+            window.sessionStorage.removeItem('userName');
+        }
+
+        clear.onclick = function () {
+            window.sessionStorage.clear();
+        }
+
+        </script>
+</body>
+
+</html>

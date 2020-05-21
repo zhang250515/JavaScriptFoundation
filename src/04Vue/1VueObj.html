@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <title>Vue Grammar 01</title>
+</head>
+
+<body>
+    <div id="app-1">
+        <p> Original : {{message}} </p>
+        <p> after : {{reversed}} </p>
+        <button @click="doReverse">do it!</button>
+    </div>
+
+    <br>
+
+    <div id="app-2">
+        Ask a question:
+        <input v-model="question">
+        <p> {{answer}} </p>
+        <img :src="url" v-if="seen">
+    </div>
+
+    <script>
+        let app1 = new Vue({
+            el: '#app-1',
+            data: {
+                message: 'hello'
+            },
+            computed: {
+                reversed: function () {
+                    return this.message.split('').reverse().join('');
+                }
+            },
+            methods: {
+                doReverse: function () {
+                    this.message = this.message.split('').reverse().join('');
+                }
+            },
+        });
+
+        let app2 = new Vue({
+            el: '#app-2',
+            data: {
+                question: '',
+                answer: 'please ask.',
+                seen: false,
+                url: '',
+            },
+            watch: {
+                question: function () {
+                    this.answer = 'waiting for stop';
+                    this.debounceGetAnswer();
+                }
+            },
+            created: function () {
+                // 每过500ms执行一次getAnswer方法
+                this.debounceGetAnswer = _.debounce(this.getAnswer, 500)
+            },
+            methods: {
+                getAnswer: function () {
+                    if (this.question.indexOf('?') === -1) {
+                        this.answer = 'Question must contain ?';
+                        this.seen = false;
+                        return;
+                    }
+                    this.answer = 'Thinking....';
+                    let vm = this;
+                    axios.get('https://yesno.wtf/api')
+                        .then(function (res) {
+                            vm.answer = _.capitalize(res.data.answer);
+                            vm.url = res.data.image;
+                            vm.seen = true;
+                        })
+                        .catch(function (error) {
+                            vm.answer = 'can not reach the api' + error;
+                        })
+                }
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>
