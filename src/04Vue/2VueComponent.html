@@ -9,6 +9,11 @@
 <body>
     <div id="component01">
         <button-counter></button-counter>    
+        <alert-box> something bad. 1111</alert-box>
+    </div>
+
+    <div id="component02">
+        <alert-box> something bad. </alert-box>
     </div>
 
     <script>
@@ -21,10 +26,22 @@
             template: '<button @click="count++"> click {{ count }} times </button>'
         })
 
+        Vue.component('alert-box', {
+            template: `
+                <div class="demo-alert-box">
+                    <strong>Error!</strong>
+                    <slot></slot>
+                 </div>
+            `
+        });
+
+        new Vue({
+            el: '#component02'
+        })
+
         new Vue({
             el: '#component01'
         })
-
     </script>
 
 </body>
