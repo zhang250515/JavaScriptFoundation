@@ -9,103 +9,190 @@
 </head>
 
 <body>
-    <!-- 类模板引擎的文本渲染 -->
-    <div id="app">
-        {{message}}
-    </div>
+<!-- 类模板引擎的文本渲染 -->
+<div id="app">
+    {{message}}
+</div>
 
-    <!-- 绑定vue提供的特殊属性 -->
-    <div id="app-2">
+<!-- 绑定vue提供的特殊属性 -->
+<div id="app-2">
         <span v-bind:title="message">
             mouse float
         </span>
-    </div>
+</div>
 
-    <!-- 条件判断 -->
-    <div id="app-3">
-        <p v-if="seen">now you see me</p>
-    </div>
+<!-- 条件判断 -->
+<div id="app-3">
+    <p v-if="seen">now you see me</p>
+</div>
 
-    <!-- 循环 -->
-    <div id="app-4">
-        <ol>
-            <li v-for="todo in todos">
-                {{todo.text}}
-            </li>
-        </ol>
-    </div>
+<!-- 循环 -->
+<div id="app-4">
+    <ol>
+        <li v-for="todo in todos">
+            {{todo.text}}
+        </li>
+    </ol>
+</div>
 
-    <!-- 事件监听 -->
-    <div id='app-5'>
-        <p> {{message}} </p>
-        <button v-on:click="reverseMessage">reverse message</button>
-    </div>
+<!-- 事件监听 -->
+<div id='app-5'>
+    <p> {{message}} </p>
+    <button v-on:click="reverseMessage">reverse message</button>
+</div>
 
-    <!-- 表单输入双向绑定 -->
-    <div id="app-6">
-        <p> {{message}} </p>
-        <input v-model="message">
-    </div>
+<!-- 表单输入双向绑定 -->
+<div id="app-6">
+    <p> {{message}} </p>
+    <label>
+        <input v-model="message"/>
+    </label>
+    <button v-on:click="reverseObj">reverse</button>
+</div>
 
-    <script>
-        let app = new Vue({
-            el: '#app',
-            data: {
-                message: 'hello vue'
-            }
-        });
+<br>
 
-        let app2 = new Vue({
-            el: '#app-2',
-            data: {
-                message: 'this page loaded at  ' + new Date().toLocaleString()
-            }
-        });
+<!-- 父子组件传值 -->
 
-        let app3 = new Vue({
-            el: '#app-3',
-            data: {
-                seen: true
-            }
-        });
+<div id="app-7">
+    <todo-item
+      v-for="item in groList"
+      v-bind:todo="item"
+      v-bind:key="item.id">
+    </todo-item>
+</div>
 
-        let app4 = new Vue({
-            el: '#app-4',
-            data: {
-                todos: [
-                    {text: 'study JavaScript'},                    
-                    {text: 'study Vue'},                    
-                    {text: 'write project'},                    
-                ]
-            }
-        });
+<hr>
 
-        let app5 = new Vue({
-            el: '#app-5',
-            data: {
-                message: 'hello vue!'
-            },
-            methods: {
-                reverseMessage: function() {
-                    this.message = this.message.split(' ').reverse().join(' ');
-                }
-            },
-        });
+<!-- if渲染 -->
+<div id="app-8">
+    <h1 v-if="aws">vue is awesome</h1>
+    <button @click="changeAws"> aws </button>
+</div>
 
-        let app6 = new Vue({
-            el: '#app-6',
-            data: {
-                message: 'Hello Vue!'
-            }
-        });
+<hr>
 
-        let temp = '12345';
-        let temp1 = '12345?';
-        console.log(temp.indexOf('?'));
-        console.log(temp1.indexOf('?'));
-        
+<!-- for渲染 -->
+<div id="app-9">
+    <ul>
+        <li v-for="item in items" :key="item.message"> {{item.message}} </li>
+    </ul>
+</div>
 
-    </script>
+<script>
+  let app = new Vue({
+    el: '#app',
+    data: {
+      message: 'hello vue'
+    },
+    created() {
+      console.log('created')
+    },
+    mounted: function () {
+      console.log('mounted')
+    },
+    beforeMount: function () {
+      console.log('before mount')
+    }
+  });
+
+  let app2 = new Vue({
+    el: '#app-2',
+    data: {
+      message: 'this page loaded at  ' + new Date().toLocaleString()
+    }
+  });
+
+  let app3 = new Vue({
+    el: '#app-3',
+    data: {
+      seen: true
+    }
+  });
+
+  let app4 = new Vue({
+    el: '#app-4',
+    data: {
+      todos: [
+        {text: 'study'}
+      ]
+    }
+  });
+
+  let app5 = new Vue({
+    el: '#app-5',
+    data: {
+      message: 'hello vue!'
+    },
+    methods: {
+      reverseMessage: function () {
+        this.message = this.message.split(' ').reverse().join(' ');
+      }
+    },
+  });
+
+  let app6 = new Vue({
+    el: '#app-6',
+    data: {
+      message: 'Hello Vue!'
+    },
+    methods: {
+      reverseObj: function () {
+        this.message = this.message.split('').reverse().join('');
+      }
+    }
+  });
+
+  app6.$watch('message', function (oldVal, newVal) {
+    console.log('old : ' + oldVal);
+    console.log('new : ' + newVal);
+  })
+
+  let temp = '12345';
+  let temp1 = '12345?';
+  console.log(temp.indexOf('?'));
+  console.log(temp1.indexOf('?'));
+
+  // 注册组件
+  Vue.component('todo-item', {
+    props: ['todo'],
+    template: '<li>{{todo.text}}</li>'
+  });
+
+  let app7 = new Vue({
+    el: '#app-7',
+    data: {
+      groList: [
+        {id: 0, text: 'vege'},
+        {id: 1, text: 'fruit'},
+        {id: 2, text: 'hello'}
+      ]
+    }
+  })
+
+  let app8 = new Vue({
+    el: '#app-8',
+    data: {
+      aws: false
+    },
+    methods: {
+      changeAws: function () {
+        this.aws = !this.aws;
+      }
+    }
+  })
+
+  let app9 = new Vue({
+    el: '#app-9',
+    data: {
+      items: [
+        {message: 'foo'},
+        {message: 'bar'}
+      ]
+    }
+  })
+
+</script>
 </body>
 
 </html>
