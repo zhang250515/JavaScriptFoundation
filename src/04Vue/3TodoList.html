@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDoList</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<p> myList </p>
+<div id="myTodoList">
+    <label> Add jobs:
+    <input v-model="newJob">
+    </label>
+    <button @click="handleAdd">  add job </button>
+    <ul>
+        <template v-for="(job, index) in jobs">
+            <li> {{job}} </li>
+            <button @click="handleRemove(index)"> remove </button>
+        </template>
+    </ul>
+</div>
+<hr>
+<p> list from official </p>
+<div id="todo-list-example">
+    <form @submit.prevent="addNewTodo">
+        <label for="new-todo">Add a todo</label>
+        <input id="new-todo" v-model="newTodoText">
+        <button>Add</button>
+    </form>
+    <ul>
+        <li is="todo-item" v-for="(todo, index) in todos"
+        :key="todo.id" :title="todo.title" @remove="todos.splice(index, 1)"
+        >
+        </li>
+    </ul>
+</div>
+<script>
+  new Vue({
+    el: '#myTodoList',
+    data: {
+      jobs: ['hello'],
+      newJob: ''
+    },
+    methods: {
+      handleAdd: function () {
+        this.jobs.push(this.newJob);
+      },
+      handleRemove: function (index) {
+        this.jobs.splice(index);
+      }
+    }
+  });
+  Vue.component('todo-item', {
+      template: '\
+      <li>\
+      {{title}}\
+      <button @click="$emit(\'remove\')">Remove</button>\
+      </li>\
+      ',
+      props: ['title']
+    })
+    new Vue({
+      el: '#todo-list-example',
+      data: {
+        newTodoText: '',
+        todos: [
+          {id: 1, title: 'hello'}
+        ],
+        nextTodoId: 2
+      },
+      methods: {
+        addNewTodo: function () {
+          this.todos.push({
+            id: this.nextTodoId++,
+            title: this.newTodoText
+          })
+          this.newTodoText = ''
+        }
+      }
+    })
+</script>
+</body>
+</html>
