@@ -92,6 +92,19 @@
     </ul>
 </div>
 
+<hr>
+
+<!-- 复选绑定 -->
+<div id="app-12">
+    <label for="c1">c1</label>
+    <input type="checkbox" id="c1" value="c1" v-model="checkNames">
+    <label for="c2">c2</label>
+    <input type="checkbox" id="c2" value="c2" v-model="checkNames">
+    <label for="c3">c3</label>
+    <input type="checkbox" id="c3" value="c3" v-model="checkNames">
+    <span>  Check Name : {{checkNames}} </span>
+</div>
+
 <script>
 
   let a = [1, 2];
@@ -231,6 +244,13 @@
           return n % 2 === 0
         })
       }
+    }
+  })
+
+  new Vue({
+    el: '#app-12',
+    data: {
+      checkNames: []
     }
   })
 

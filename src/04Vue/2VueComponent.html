@@ -7,42 +7,82 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="component01">
-        <button-counter></button-counter>    
-        <alert-box> something bad. 1111111</alert-box>
+<!-- 组件可复用 -->
+<div id="component01">
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+</div>
+<!-- 使用slot进行插值 -->
+<div id="component02">
+    <alert-box> something bad.</alert-box>
+</div>
+<hr>
+<!--向组件中传值-->
+<div id="cp3">
+    <div :style="{fontSize: postFontSize + 'px'}">
+        <blog-post
+          v-for="post in posts"
+          :post="post"
+          :key="post.id"
+          @enlarge-text="postFontSize = postFontSize + 10"
+          @small-text="postFontSize = postFontSize - 10"
+        >
+        </blog-post>
     </div>
+    <p> {{postFontSize}} </p>
+</div>
+<hr>
 
-    <div id="component02">
-        <alert-box> something bad. </alert-box>
-    </div>
+<script>
+    Vue.component('button-counter', {
+        data() {
+            return {
+                count: 0
+            }
+        },
+        template: '<button @click="count++"> click {{ count }} times </button>'
+    })
 
-    <script>
-        Vue.component('button-counter', {
-            data() {
-                return {
-                    count: 0
-                }
-            },
-            template: '<button @click="count++"> click {{ count }} times </button>'
-        })
-
-        Vue.component('alert-box', {
-            template: `
+    Vue.component('alert-box', {
+        template: `
                 <div class="demo-alert-box">
                     <strong>Error!</strong>
                     <slot></slot>
                  </div>
             `
-        });
+    });
 
-        new Vue({
-            el: '#component02'
-        })
+    Vue.component('blog-post', {
+        props: ['post'],
+        template: '<div class="blog-post">\
+            <h3>{{post.title}}</h3> \
+            <button @click="$emit(\'enlarge-text\')"> large font </button>\
+            <button @click="$emit(\'small-text\')"> small </button>\
+            <div v-html="post.content"> </div>\
+         </div>'
+    })
 
-        new Vue({
-            el: '#component01'
-        })
-    </script>
+    new Vue({
+        el: '#component02'
+    })
+
+    new Vue({
+        el: '#component01'
+    })
+
+    new Vue({
+        el: '#cp3',
+        data: {
+            posts: [
+                {id: 1, title: 'hello1', content: '<p>hello</p>'},
+                {id: 2, title: 'hello2', content: '<p>hello</p>'},
+                {id: 3, title: 'hello3', content: '<p>hello</p>'}
+            ],
+            postFontSize: 1
+        }
+    })
+</script>
 
 </body>
 </html>

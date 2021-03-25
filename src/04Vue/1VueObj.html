@@ -42,16 +42,37 @@
 <!-- 自定义侦听器watch适用于异步调用或开销较大的操作 -->
 <div id="app-2">
     Ask a question:
-    <input v-model="question">
+    <label>
+        <input v-model="question">
+    </label>
     <p> {{answer}} </p>
-    <img :src="url" v-if="seen">
+    <img :src="url" v-if="seen" alt="yes">
 </div>
 
 <hr>
 
-
+<!-- 监听事件 -->
+<div id="app-4">
+    <span> Count Number: </span>
+    <p> {{counter}} </p>
+    <button @click="counter = counter + 1"> Add </button>
+    <button @click="showEvent($event)"> show event </button>
+</div>
 
 <script>
+
+  new Vue({
+    el: '#app-4',
+    data: {
+      counter: 0
+    },
+    methods: {
+      showEvent: function (event) {
+        console.log(event);
+        console.log(event.type)
+      }
+    }
+  })
 
   new Vue({
     el: '#app-3',
@@ -65,8 +86,7 @@
       }
     }
   })
-
-  let app1 = new Vue({
+  new Vue({
     el: '#app-1',
     data: {
       message: 'hello',
@@ -86,8 +106,7 @@
       }
     },
   });
-
-  let app2 = new Vue({
+  new Vue({
     el: '#app-2',
     data: {
       question: '',
@@ -127,8 +146,6 @@
       }
     }
   });
-
-
 </script>
 </body>
 
