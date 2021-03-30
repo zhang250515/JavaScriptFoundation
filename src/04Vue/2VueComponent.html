@@ -33,7 +33,11 @@
     <p> {{postFontSize}} </p>
 </div>
 <hr>
-
+<!-- 自定义组件的v model -->
+<div id="cp4">
+    <p>{{changeVal}}</p>
+    <base-checkbox v-model="changeVal"> </base-checkbox>
+</div>
 <script>
     Vue.component('button-counter', {
         data() {
@@ -63,6 +67,19 @@
          </div>'
     })
 
+    Vue.component('base-checkbox', {
+        model: {
+            prop: 'checked',
+            event: 'change'
+        },
+        props: {
+            checked: Boolean
+        },
+        template: `
+        <input type="checkbox" :checked="checked" @change="$emit('change', $event.target.checked)">
+        `
+    })
+
     new Vue({
         el: '#component02'
     })
@@ -80,6 +97,13 @@
                 {id: 3, title: 'hello3', content: '<p>hello</p>'}
             ],
             postFontSize: 1
+        }
+    })
+
+    new Vue({
+        el: '#cp4',
+        data: {
+            changeVal: 10
         }
     })
 </script>
