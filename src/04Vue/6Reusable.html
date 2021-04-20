@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reusable</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<!-- custom order -->
+<div id="app1" v-demo="{ color: 'white', text: 'hello!' }"></div>
+<!-- custom render -->
+<div id="app2">
+    <custom-head :level="1">
+        <a id="hello-world" href="#hello-world">
+            Hello world!
+        </a>
+    </custom-head>
+    <custom-head :level="2">
+        <a id="hello-world2" href="#hello-world2">
+            Hello world!
+        </a>
+    </custom-head>
+</div>
+
+</body>
+<script>
+    Vue.directive('demo', function (el, binding) {
+        console.log(binding.value.color) // => "white"
+        console.log(binding.value.text)  // => "hello!"
+    })
+    let app1 = new Vue({
+        el: '#app1'
+    });
+
+    Vue.component('custom-head', {
+        render: function (createElement) {
+            return createElement(
+              'h' + this.level,
+              this.$slots.default
+            )
+        },
+        props: {
+            level: {
+                type: Number,
+                required: true
+            }
+        }
+    })
+    let app2 = new Vue({
+        el: '#app2'
+    })
+</script>
+</html>
